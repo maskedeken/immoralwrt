@@ -53,7 +53,8 @@ case "$board" in
 		wifi
 		;;
 	cetron,ct3003-stock|\
-	cetron,ct3003-ubootmod)
+	cetron,ct3003-ubootmod|\
+	nokia,ea0326gmp)
 		addr=$(cat /sys/class/net/eth0/address)
 		[ "$PHYNBR" = "0" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
@@ -76,6 +77,11 @@ case "$board" in
 	cmcc,rax3000m-emmc-ubootmod|\
 	jdcloud,re-cp-03)
 		[ "$PHYNBR" = "1" ] && mmc_get_mac_binary factory 0xa > /sys${DEVPATH}/macaddress
+		;;
+	cudy,re3000-v1)
+		addr=$(mtd_get_mac_binary bdinfo 0xde00)
+		[ "$PHYNBR" = "0" ] && echo "$addr" > /sys${DEVPATH}/macaddress
+		[ "$PHYNBR" = "1" ] && macaddr_setbit_la $(macaddr_add $addr 1) > /sys${DEVPATH}/macaddress
 		;;
 	cudy,wr3000-v1)
 		addr=$(mtd_get_mac_binary bdinfo 0xde00)

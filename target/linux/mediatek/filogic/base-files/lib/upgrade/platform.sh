@@ -115,12 +115,14 @@ platform_do_upgrade() {
 		CI_ROOTPART="rootfs"
 		emmc_do_upgrade "$1"
 		;;
-	cudy,wr3000-v1)
+	cudy,wr3000-v1|\
+	cudy,re3000-v1)
 		default_do_upgrade "$1"
 		;;
 	h3c,magic-nx30-pro|\
 	jcg,q30|\
 	mediatek,mt7981-rfb|\
+	nokia,ea0326gmp|\
 	qihoo,360t7|\
 	tplink,tl-xdr4288|\
 	tplink,tl-xdr6086|\
@@ -155,6 +157,23 @@ platform_do_upgrade() {
 		CI_KERNPART="fit"
 		CI_ROOTPART="ubi_rootfs"
 		nand_do_upgrade "$1"
+                ;;
+	unielec,u7981-01*)
+		local rootdev="$(cmdline_get_var root)"
+		rootdev="${rootdev##*/}"
+		rootdev="${rootdev%p[0-9]*}"
+		case "$rootdev" in
+		mmc*)
+			CI_ROOTDEV="$rootdev"
+			CI_KERNPART="kernel"
+			CI_ROOTPART="rootfs"
+			emmc_do_upgrade "$1"
+			;;
+		*)
+			CI_KERNPART="fit"
+			nand_do_upgrade "$1"
+			;;
+		esac
 		;;
 	*)
 		nand_do_upgrade "$1"
