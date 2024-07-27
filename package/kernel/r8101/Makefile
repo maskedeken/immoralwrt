@@ -6,23 +6,23 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=r8101
-PKG_VERSION:=1.038.02
+PKG_VERSION:=1.039.00
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@IMMORTALWRT
-PKG_HASH:=4141ebda97e277b5807a98b4090d7884d4463ac7a048676c72cb648ae4e8ae9e
-PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_HASH:=e64e1738e71d6717dd844bf771fea4691edae63e92d7d03bb5ad2ef08e56e72b
 
 PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
 PKG_LICENSE:=GPL-2.0-only
+
+PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/r8101
   TITLE:=Driver for Realtek r8101 chipsets
   SUBMENU:=Network Devices
-  VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(BOARD)-$(PKG_RELEASE)
   DEPENDS:=@PCI_SUPPORT
   FILES:= $(PKG_BUILD_DIR)/src/r8101.ko
   AUTOLOAD:=$(call AutoProbe,r8101)
@@ -33,7 +33,7 @@ define KernelPackage/r8101/description
 endef
 
 define Build/Compile
-	+$(KERNEL_MAKE) M=$(PKG_BUILD_DIR)/src modules
+	+$(KERNEL_MAKE) $(PKG_JOBS) M=$(PKG_BUILD_DIR)/src modules
 endef
 
 $(eval $(call KernelPackage,r8101))
