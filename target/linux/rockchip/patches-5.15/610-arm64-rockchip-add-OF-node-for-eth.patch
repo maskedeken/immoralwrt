@@ -102,6 +102,48 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
  };
  
  &pinctrl {
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+@@ -372,6 +372,19 @@
+ 	reset-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
+ 	vpcie3v3-supply = <&vcc3v3_pcie>;
+ 	status = "okay";
++
++	pcie@0,0 {
++		reg = <0x00100000 0 0 0 0>;
++		#address-cells = <3>;
++		#size-cells = <2>;
++
++		rtl8125_1: pcie-eth@10,0 {
++			compatible = "pci10ec,8125";
++			reg = <0x000000 0 0 0 0>;
++
++			realtek,led-data = <0x200 0x2b 0x0 0x0>;
++		};
++	};
+ };
+ 
+ &pcie3x2 {
+@@ -379,6 +392,19 @@
+ 	reset-gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
+ 	vpcie3v3-supply = <&vcc3v3_pcie>;
+ 	status = "okay";
++
++	pcie@0,0 {
++		reg = <0x00200000 0 0 0 0>;
++		#address-cells = <3>;
++		#size-cells = <2>;
++
++		rtl8125_2: pcie-eth@20,0 {
++			compatible = "pci10ec,8125";
++			reg = <0x000000 0 0 0 0>;
++
++			realtek,led-data = <0x200 0x2b 0x0 0x0>;
++		};
++ 	};
+ };
+ 
+ &pinctrl {
 --- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
 @@ -31,6 +31,7 @@
@@ -121,49 +163,78 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
  	phy-mode = "rgmii-id";
  	pinctrl-names = "default";
 @@ -76,6 +78,7 @@
- 		reg = <0>;
+ 		reg = <0x1>;
  		pinctrl-0 = <&eth_phy0_reset_pin>;
  		pinctrl-names = "default";
 +		realtek,led-data = <0x6d60>;
  	};
  };
  
-@@ -85,6 +88,35 @@
- 		reg = <0>;
+@@ -85,6 +88,7 @@
+ 		reg = <0x1>;
  		pinctrl-0 = <&eth_phy1_reset_pin>;
  		pinctrl-names = "default";
 +		realtek,led-data = <0x6d60>;
-+	};
+ 	};
+ };
+ 
+@@ -106,6 +110,14 @@
+ 	vccio3-supply = <&vcc_3v3>;
+ };
+ 
++&rtl8125_1 {
++	label = "eth3";
 +};
 +
-+&pcie3x1 {
++&rtl8125_2 {
++	label = "eth2";
++};
++
+ &sdhci {
+ 	bus-width = <8>;
+ 	max-frequency = <200000000>;
+--- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts
+@@ -65,6 +65,19 @@
+ 	reset-gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+ 	vpcie3v3-supply = <&vcc3v3_pcie>;
+ 	status = "okay";
++
 +	pcie@0,0 {
 +		reg = <0x00100000 0 0 0 0>;
 +		#address-cells = <3>;
 +		#size-cells = <2>;
 +
-+		pcie-eth@10,0 {
++		rtl8125_1: pcie-eth@10,0 {
 +			compatible = "pci10ec,8125";
 +			reg = <0x000000 0 0 0 0>;
-+			label = "eth3";
-+		};
-+	};
-+};
 +
-+&pcie3x2 {
++			realtek,led-data = <0x0 0x0 0x2b 0x200>;
++		};
++ 	};
+ };
+ 
+ &pcie3x2 {
+@@ -72,6 +85,19 @@
+ 	reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
+ 	vpcie3v3-supply = <&vcc3v3_pcie>;
+ 	status = "okay";
++
 +	pcie@0,0 {
 +		reg = <0x00200000 0 0 0 0>;
 +		#address-cells = <3>;
 +		#size-cells = <2>;
 +
-+		pcie-eth@20,0 {
++		rtl8125_2: pcie-eth@20,0 {
 +			compatible = "pci10ec,8125";
 +			reg = <0x000000 0 0 0 0>;
-+			label = "eth2";
++
++			realtek,led-data = <0x0 0x0 0x2b 0x200>;
 +		};
- 	};
++ 	};
  };
  
+ &pinctrl {
 --- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
 @@ -72,6 +72,7 @@
@@ -174,3 +245,43 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
  	};
  };
  
+@@ -79,6 +80,19 @@
+ 	num-lanes = <1>;
+ 	reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
+ 	status = "okay";
++
++	pcie@0,0 {
++		reg = <0x00000000 0 0 0 0>;
++		#address-cells = <3>;
++		#size-cells = <2>;
++
++		rtl8125_1: pcie@1,0 {
++			compatible = "pci10ec,8125";
++			reg = <0x000000 0 0 0 0>;
++
++			realtek,led-data = <0x0 0x0 0x2b 0x200>;
++		};
++	};
+ };
+ 
+ &pcie30phy {
+@@ -91,6 +105,19 @@
+ 	reset-gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+ 	vpcie3v3-supply = <&vcc3v3_pcie>;
+ 	status = "okay";
++
++	pcie@0,0 {
++		reg = <0x00100000 0 0 0 0>;
++		#address-cells = <3>;
++		#size-cells = <2>;
++
++		rtl8125_2: pcie@10,0 {
++			compatible = "pci10ec,8125";
++			reg = <0x000000 0 0 0 0>;
++
++			realtek,led-data = <0x0 0x0 0x2b 0x200>;
++		};
++	};
+ };
+ 
+ &pcie3x2 {

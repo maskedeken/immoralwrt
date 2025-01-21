@@ -21,6 +21,17 @@ define Device/ariaboard_photonicat
 endef
 TARGET_DEVICES += ariaboard_photonicat
 
+define Device/armsom_sige3
+  DEVICE_VENDOR := ArmSoM
+  DEVICE_MODEL := Sige3
+  SOC := rk3568
+  DEVICE_DTS := rockchip/rk3568-armsom-sige3
+  BOOT_FLOW := pine64-img
+  DEVICE_PACKAGES := kmod-brcmfmac kmod-r8125 wpad-openssl \
+	brcmfmac-firmware-43752-sdio brcmfmac-nvram-43752-sdio
+endef
+TARGET_DEVICES += armsom_sige3
+
 define Device/ezpro_mrkaio-m68s
   DEVICE_VENDOR := EZPRO
   DEVICE_MODEL := Mrkaio M68S
@@ -166,6 +177,17 @@ define Device/lunzn_fastrhino-r68s
 endef
 TARGET_DEVICES += lunzn_fastrhino-r68s
 
+define Device/lyt_t68m
+  DEVICE_VENDOR := LYT
+  DEVICE_MODEL := T68M
+  SOC := rk3568
+  DEVICE_DTS := rockchip/rk3568-lyt-t68m
+  UBOOT_DEVICE_NAME := lyt-t68m-rk3568
+  BOOT_FLOW := pine64-img
+  DEVICE_PACKAGES := kmod-r8125 kmod-mt7921e wpad-openssl
+endef
+TARGET_DEVICES += lyt_t68m
+
 define Device/pine64_rockpro64
   DEVICE_VENDOR := Pine64
   DEVICE_MODEL := RockPro64
@@ -189,9 +211,12 @@ TARGET_DEVICES += radxa_rock-pi-4a
 define Device/radxa_rock-pi-e
   DEVICE_VENDOR := Radxa
   DEVICE_MODEL := ROCK Pi E
+  DEVICE_ALT0_VENDOR := Radxa
+  DEVICE_ALT0_MODEL := ROCK Pi E v3.0
   SOC := rk3328
   SUPPORTED_DEVICES := radxa,rockpi-e
   BOOT_FLOW := pine64-bin
+  DEVICE_PACKAGES := kmod-rtw88-8723du kmod-usb-net-cdc-ncm kmod-usb-net-rndis wpad-openssl
 endef
 TARGET_DEVICES += radxa_rock-pi-e
 

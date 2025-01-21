@@ -202,6 +202,30 @@ define U-Boot/mt7629_rfb
   UBOOT_CONFIG:=mt7629_rfb
 endef
 
+define U-Boot/mt7981_abt_asr3000
+  NAME:=ABT ASR3000
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=abt_asr3000
+  UBOOT_CONFIG:=mt7981_abt_asr3000
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7981
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+endef
+
+define U-Boot/mt7981_cmcc_a10
+  NAME:=CMCC A10
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=cmcc_a10
+  UBOOT_CONFIG:=mt7981_cmcc_a10
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7981
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+endef
+
 define U-Boot/mt7981_cmcc_rax3000m-emmc
   NAME:=CMCC RAX3000M
   BUILD_SUBTARGET:=filogic
@@ -238,11 +262,35 @@ define U-Boot/mt7981_h3c_magic-nx30-pro
   DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
 endef
 
+define U-Boot/mt7981_imou_lc-hx3001
+  NAME:=Imou LC-HX3001
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=imou_lc-hx3001
+  UBOOT_CONFIG:=mt7981_imou_lc-hx3001
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7981
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+endef
+
 define U-Boot/mt7981_jcg_q30
   NAME:=JCG Q30
   BUILD_SUBTARGET:=filogic
   BUILD_DEVICES:=jcg_q30
   UBOOT_CONFIG:=mt7981_jcg_q30
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7981
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+endef
+
+define U-Boot/mt7981_konka_komi-a31
+  NAME:=Konka KOMI A31
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=konka_komi-a31
+  UBOOT_CONFIG:=mt7981_konka_komi-a31
   UBOOT_IMAGE:=u-boot.fip
   BL2_BOOTDEV:=spim-nand
   BL2_SOC:=mt7981
@@ -467,6 +515,18 @@ define U-Boot/mt7986_jdcloud_re-cp-03
   DEPENDS:=+trusted-firmware-a-mt7986-emmc-ddr4
 endef
 
+define U-Boot/mt7986_netcore_n60
+  NAME:=Netcore N60
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=netcore_n60
+  UBOOT_CONFIG:=mt7986_netcore_n60
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7986
+  BL2_DDRTYPE:=ddr3
+  DEPENDS:=+trusted-firmware-a-mt7986-spim-nand-ddr3
+endef
+
 define U-Boot/mt7986_tplink_tl-xdr4288
   NAME:=TP-LINK TL-XDR4288
   BUILD_SUBTARGET:=filogic
@@ -501,6 +561,18 @@ define U-Boot/mt7986_tplink_tl-xdr6088
   BL2_SOC:=mt7986
   BL2_DDRTYPE:=ddr3
   DEPENDS:=+trusted-firmware-a-mt7986-spim-nand-ddr3
+endef
+
+define U-Boot/mt7986_tplink_tl-xtr8488
+  NAME:=TP-LINK TL-XTR8488
+  BUILD_SUBTARGET:=filogic
+  BUILD_DEVICES:=tplink_tl-xtr8488
+  UBOOT_CONFIG:=mt7986_tplink_tl-xtr8488
+  UBOOT_IMAGE:=u-boot.fip
+  BL2_BOOTDEV:=spim-nand
+  BL2_SOC:=mt7986
+  BL2_DDRTYPE:=ddr4
+  DEPENDS:=+trusted-firmware-a-mt7986-spim-nand-ddr4
 endef
 
 define U-Boot/mt7986_xiaomi_redmi-router-ax6000
@@ -606,10 +678,14 @@ UBOOT_TARGETS := \
 	mt7628_rfb \
 	ravpower_rp-wd009 \
 	mt7629_rfb \
+	mt7981_abt_asr3000 \
+	mt7981_cmcc_a10 \
 	mt7981_cmcc_rax3000m-emmc \
 	mt7981_cmcc_rax3000m-nand \
 	mt7981_h3c_magic-nx30-pro \
+	mt7981_imou_lc-hx3001 \
 	mt7981_jcg_q30 \
+	mt7981_konka_komi-a31 \
 	mt7981_nokia_ea0326gmp \
 	mt7981_rfb-spim-nand \
 	mt7981_rfb-emmc \
@@ -627,9 +703,11 @@ UBOOT_TARGETS := \
 	mt7986_bananapi_bpi-r3-mini-snand \
 	mt7986_glinet_gl-mt6000 \
 	mt7986_jdcloud_re-cp-03 \
+	mt7986_netcore_n60 \
 	mt7986_tplink_tl-xdr4288 \
 	mt7986_tplink_tl-xdr6086 \
 	mt7986_tplink_tl-xdr6088 \
+	mt7986_tplink_tl-xtr8488 \
 	mt7986_xiaomi_redmi-router-ax6000 \
 	mt7986_zyxel_ex5601-t0 \
 	mt7986_rfb \

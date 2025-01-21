@@ -1460,7 +1460,7 @@ define Device/jdcloud_re-cp-02
   $(Device/dsa-migration)
   $(Device/uimage-lzma-loader)
   IMAGE_SIZE := 16000k
-  DEVICE_VENDOR := JD-Cloud
+  DEVICE_VENDOR := JDCloud
   DEVICE_MODEL := RE-CP-02
   DEVICE_PACKAGES := kmod-mt7915-firmware kmod-sdhci-mt7620 automount
 endef
@@ -1741,6 +1741,32 @@ define Device/mts_wg430223
 endef
 TARGET_DEVICES += mts_wg430223
 
+define Device/netgear_eax12
+  $(Device/nand)
+  DEVICE_VENDOR := NETGEAR
+  DEVICE_MODEL := EAX12
+  DEVICE_ALT0_VENDOR := NETGEAR
+  DEVICE_ALT0_MODEL := EAX11
+  DEVICE_ALT0_VARIANT := v2
+  DEVICE_ALT1_VENDOR := NETGEAR
+  DEVICE_ALT1_MODEL := EAX15
+  DEVICE_ALT1_VARIANT := v2
+  DEVICE_PACKAGES := kmod-mt7915-firmware -uboot-envtools
+  NETGEAR_ENC_MODEL := EAX12
+  NETGEAR_ENC_REGION := US
+  NETGEAR_ENC_HW_ID_LIST := 1010000004540000_NETGEAR
+  NETGEAR_ENC_MODEL_LIST := EAX12;EAX11v2;EAX15v2
+  IMAGE_SIZE := 57344k
+  KERNEL_LOADADDR := 0x82000000
+  KERNEL := kernel-bin | relocate-kernel 0x80001000 | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb | \
+	append-squashfs4-fakeroot
+  IMAGES += factory.img
+  IMAGE/factory.img := append-kernel | pad-to $$(KERNEL_SIZE) | \
+	append-ubi | check-size | netgear-encrypted-factory
+endef
+TARGET_DEVICES += netgear_eax12
+
 define Device/netgear_ex6150
   $(Device/dsa-migration)
   $(Device/uimage-lzma-loader)
@@ -1963,6 +1989,16 @@ define Device/netis_wf2881
 endef
 TARGET_DEVICES += netis_wf2881
 
+define Device/openfi_5pro
+  $(Device/dsa-migration)
+  IMAGE_SIZE := 65216k
+  DEVICE_VENDOR := OpenFi
+  DEVICE_MODEL := 5Pro 
+  DEVICE_PACKAGES := kmod-mt7603 kmod-mt7615e kmod-mt7663-firmware-ap kmod-usb3 \
+	kmod-sdhci-mt7620
+endef
+TARGET_DEVICES += openfi_5pro
+
 define Device/oraybox_x3a
   $(Device/dsa-migration)
   $(Device/uimage-lzma-loader)
@@ -2071,6 +2107,7 @@ TARGET_DEVICES += sercomm_na502
 
 define Device/sercomm_na502s
   $(Device/nand)
+  $(Device/uimage-lzma-loader)
   IMAGE_SIZE := 20971520
   DEVICE_VENDOR := SERCOMM
   DEVICE_MODEL := NA502S
@@ -2330,7 +2367,6 @@ define Device/tplink_er605-v2
   KERNEL_IN_UBI := 1
   KERNEL_LOADADDR := 0x82000000
   KERNEL := kernel-bin | relocate-kernel 0x80001000 | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
-  IMAGES += sysupgrade.tar
   IMAGE_SIZE := 127744k
 endef
 TARGET_DEVICES += tplink_er605-v2
@@ -2457,7 +2493,7 @@ TARGET_DEVICES += ubnt_edgerouter-x-sfp
 define Device/ubnt_unifi-6-lite
   $(Device/dsa-migration)
   DEVICE_VENDOR := Ubiquiti
-  DEVICE_MODEL := UniFi 6 Lite
+  DEVICE_MODEL := UniFi U6 Lite
   DEVICE_DTS_CONFIG := config@1
   DEVICE_DTS_LOADADDR := 0x87000000
   DEVICE_PACKAGES += kmod-mt7603 kmod-mt7915-firmware -uboot-envtools
